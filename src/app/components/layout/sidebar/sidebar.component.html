@@ -1,6 +1,6 @@
 <div
   class="sidebar flex flex-col border h-full p-4"
-  [class.open]="layoutService.visible | async"
+  [class.open]="layoutService.isSidebarVisible | async"
 >
   <div class="flex flex-col gap-4">
     <div class="flex justify-center items-center gap-2 px-4">
@@ -8,20 +8,23 @@
         [img]="sidebarObj.header.icon"
         class="my-icon size-8"
       ></lucide-icon>
-      <h1 class="font-bold text-lg" *ngIf="layoutService.visible | async">
+      <h1
+        class="font-bold text-lg"
+        *ngIf="layoutService.isSidebarVisible | async"
+      >
         {{ sidebarObj.header.name }}
       </h1>
     </div>
     <div
       class="flex flex-col gap-2"
-      [class.items-center]="!(layoutService.visible | async)"
+      [class.items-center]="!(layoutService.isSidebarVisible | async)"
     >
       <div *ngFor="let item of sidebarObj.items" class="flex gap-2">
         <lucide-icon [img]="item.icon" class="my-icon size-5"></lucide-icon>
         <a
           [routerLink]="item.route"
           routerLinkActive="active"
-          *ngIf="layoutService.visible | async"
+          *ngIf="layoutService.isSidebarVisible | async"
         >
           {{ item.name }}
         </a>

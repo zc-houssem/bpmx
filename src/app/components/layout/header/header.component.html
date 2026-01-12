@@ -1,13 +1,18 @@
 <header
   class="flex h-14 items-center gap-2 border-b px-4 lg:h-15 lg:px-6 w-full"
 >
-  <button hlmBtn (click)="layoutService.toggle()" size="icon" variant="ghost">
+  <button
+    hlmBtn
+    (click)="layoutService.toggleSidebar()"
+    size="icon"
+    variant="ghost"
+  >
     <lucide-icon [img]="Columns2" class="my-icon"></lucide-icon>
   </button>
   <!-- <Commander /> -->
   <div class="flex justify-center items-center gap-4 ml-auto">
     <!-- <LanguageSwitcher /> -->
-    <!-- <ModeToggle /> -->
+    <app-mode-toggle></app-mode-toggle>
     <!-- <UserNav /> -->
   </div>
 </header>

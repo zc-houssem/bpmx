@@ -1,15 +1,27 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, of } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class LayoutService {
-  visible: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isSidebarVisible: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  darkMode: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor() {}
 
-  toggle(): void {
-    this.visible.next(!this.visible.value);
-    console.log(this.visible.value);
+  toggleSidebar(): void {
+    this.isSidebarVisible.next(!this.isSidebarVisible.value);
+  }
+
+  toggleDarkMode(): void {
+    const html = document.getElementsByTagName("html")[0];
+    if (this.darkMode.value) {
+      html.classList.remove("dark");
+      html.setAttribute("data-theme", "light");
+    } else {
+      html.classList.add("dark");
+      html.setAttribute("data-theme", "dark");
+    }
+    this.darkMode.next(!this.darkMode.value);
   }
 }

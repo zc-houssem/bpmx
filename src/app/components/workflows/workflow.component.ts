@@ -1,11 +1,10 @@
 import { Component, inject, ViewChild } from "@angular/core";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import {
+  initializeModel,
   NgDiagramComponent,
   NgDiagramConfig,
   NgDiagramModelService,
-  NgDiagramService,
-  initializeModel,
   provideNgDiagram,
 } from "ng-diagram";
 
