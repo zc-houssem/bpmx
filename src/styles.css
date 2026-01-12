@@ -66,3 +66,18 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .sidebar {
+    @apply bg-sidebar overflow-hidden w-16;
+    transition: width 300ms ease;
+  }
+
+  .sidebar.open {
+    @apply w-[250px];
+  }
+}

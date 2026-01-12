@@ -1,7 +1,7 @@
-# Tauri + Angular
+# BPMX
 
-This template should help get you started developing with Tauri and Angular.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.8.
 
-## Recommended IDE Setup
+## Development server
 
-[VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) + [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template).
+Run `ng serve` for a dev server.
