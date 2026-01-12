@@ -5,6 +5,7 @@ import {
   NgDiagramComponent,
   NgDiagramConfig,
   NgDiagramModelService,
+  NgDiagramViewportService,
   provideNgDiagram,
 } from "ng-diagram";
 
@@ -16,10 +17,14 @@ import {
   styleUrl: "./workflow.component.css",
 })
 export class WorkflowComponent {
-  private diagramModelService = inject(NgDiagramModelService);
+  readonly diagramModelService = inject(NgDiagramModelService);
+  readonly viewPortService = inject(NgDiagramViewportService);
 
   @ViewChild(NgDiagramComponent)
   diagram!: NgDiagramComponent;
+
+  counter: number = 1;
+  selectedNode: string | null = null;
 
   model = initializeModel({
     nodes: [],
@@ -31,11 +36,8 @@ export class WorkflowComponent {
     edgeRouting: { defaultRouting: "bezier" },
   };
 
-  /* -----------------------------
-   * Center / fit diagram
-   * ----------------------------- */
   centerView() {
-    // this.diagram?.zoomToFit();
+    this.viewPortService.zoomToFit();
   }
 
   addNode() {
@@ -47,8 +49,9 @@ export class WorkflowComponent {
           x: 200 + Math.random() * 200,
           y: 200 + Math.random() * 200,
         },
-        data: { label: `Node ${id}` },
+        data: { label: `Node ${this.counter}` },
       },
     ]);
+    this.counter++;
   }
 }

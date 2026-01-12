@@ -3,10 +3,16 @@ import { LayoutService } from "../layout.service";
 import { CommonModule } from "@angular/common";
 import { LucideAngularModule, Save, Workflow } from "lucide-angular";
 import { RouterModule } from "@angular/router";
+import { HlmSeparatorImports } from "@spartan-ng/helm/separator";
 
 @Component({
   selector: "app-sidebar",
-  imports: [CommonModule, LucideAngularModule, RouterModule],
+  imports: [
+    CommonModule,
+    LucideAngularModule,
+    HlmSeparatorImports,
+    RouterModule,
+  ],
   templateUrl: "./sidebar.component.html",
   styleUrl: "./sidebar.component.css",
 })
