@@ -1,0 +1,17 @@
+<div [ngSwitch]="field.variant">
+  <!-- Text Input -->
+  <input hlmInput />
+
+  <!-- Custom Input -->
+  <ng-container *ngSwitchCase="'custom'">
+    <ng-template #customComponentContainer></ng-template>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'empty'"></ng-container>
+
+  <!-- Default -->
+  <p *ngSwitchDefault class="text-red-500 font-bold">Default (Not supported)</p>
+</div>
+<div *ngIf="field.error | async as error" class="text-red-500 text-xs mt-1">
+  <div *ngFor="let err of normalizeError(error)">{{ err }}</div>
+</div>
