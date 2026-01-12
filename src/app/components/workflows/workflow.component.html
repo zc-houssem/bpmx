@@ -1,0 +1,19 @@
+<div class="flex flex-row flex-1 w-full">
+  <!-- Diagram -->
+  <div class="flex flex-col w-3/4">
+    <ng-diagram [model]="model" [config]="config" />
+  </div>
+
+  <!-- Sidebar -->
+  <div class="flex flex-col w-1/4 border-l">
+    <div class="p-4 space-y-3">
+      <h1 class="text-lg font-semibold">Workflow</h1>
+
+      <button hlmBtn (click)="addNode()">New Node</button>
+
+      <button hlmBtn variant="secondary" (click)="centerView()">
+        Center View
+      </button>
+    </div>
+  </div>
+</div>

@@ -7349,6 +7349,13 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+ng-diagram@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/ng-diagram/-/ng-diagram-0.9.1.tgz#a4f724b49f142984e8c62d3d5af23893418fa325"
+  integrity sha512-u/2PEZjyQaiBFSNloZDx1589KiOfwy1Fp4Mk9NHz0RkIAOlnpOqncQUDpPQr00+JTSIm8UqQHLWybAJcgLEVEA==
+  dependencies:
+    tslib "^2.3.0"
+
 node-abort-controller@^3.0.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/node-abort-controller/-/node-abort-controller-3.1.1.tgz#a94377e964a9a37ac3976d848cb5c765833b8548"
