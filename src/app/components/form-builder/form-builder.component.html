@@ -85,9 +85,9 @@
                     {{ field.label || "" }}
                     <span *ngIf="field.isRequired" class="text-red-500">*</span>
                   </label>
-                  <!-- <sm-field-builder [field]="field"></sm-field-builder> -->
+                  <app-field-builder [field]="field"></app-field-builder>
                   <div class="flex justify-between gap-2">
-                    <p class="text-xs text-muted-color">
+                    <p class="text-xs opacity-70">
                       {{ field.description || "" }}
                     </p>
                   </div>

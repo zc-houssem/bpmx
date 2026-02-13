@@ -22,13 +22,14 @@ import {
   map,
   takeUntil,
 } from "rxjs";
+import { FieldBuilderComponent } from "./field-builder/field-builder.component";
 
 @Component({
-  selector: "sm-form-builder",
+  selector: "app-form-builder",
   templateUrl: "./form-builder.component.html",
   styleUrls: ["./form-builder.component.css"],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FieldBuilderComponent],
 })
 export class FormBuilderComponent implements OnInit, OnDestroy {
   @Input() formObject: DynamicForm = {

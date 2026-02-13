@@ -6,10 +6,10 @@ import { CommonModule } from "@angular/common";
 import { getFormBuilderObjectFactory } from "./form-builder-factory";
 
 @Component({
-  selector: "sm-observable-form-builder-resolver",
-  template: `<sm-form-builder
+  selector: "app-observable-form-builder-resolver",
+  template: `<app-form-builder
     [formObject]="(formObject | async) || fallbackForm"
-  ></sm-form-builder>`,
+  ></app-form-builder>`,
   imports: [FormBuilderComponent, CommonModule],
 })
 export class ObservableFormBuilderResolverComponent {

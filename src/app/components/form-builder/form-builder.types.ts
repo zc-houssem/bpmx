@@ -42,6 +42,7 @@ export enum FieldVariant {
   TEL = "tel",
   NUMBER = "number",
   PASSWORD = "password",
+  SWITCH = "switch",
   TEXTAREA = "textarea",
   CUSTOM = "custom",
   EMPTY = "empty",
@@ -138,6 +139,11 @@ export interface RadioFieldProps {
 export interface EditorFieldProps extends BaseFieldProps {
   placeholder?: string;
   height?: string;
+}
+
+export interface SwitchFieldProps {
+  checked?: Observable<boolean>;
+  onCheckedChange?: (event: boolean) => void;
 }
 
 export interface CustomFieldProps {

@@ -19,13 +19,15 @@ import {
 } from "../form-builder.types";
 import { isObservable, map, Observable, of, Subject, takeUntil } from "rxjs";
 import { HlmInputImports } from "@spartan-ng/helm/input";
+import { HlmSwitch } from "@spartan-ng/helm/switch";
+import { HlmTextareaImports } from "@spartan-ng/helm/textarea";
 
 @Component({
-  selector: "sm-field-builder",
+  selector: "app-field-builder",
   templateUrl: "./field-builder.component.html",
   styleUrls: ["./field-builder.component.css"],
   standalone: true,
-  imports: [CommonModule, HlmInputImports],
+  imports: [CommonModule, HlmInputImports, HlmSwitch, HlmTextareaImports],
 })
 export class FieldBuilderComponent implements OnInit, AfterViewInit {
   @Input() field!: DynamicField<any>;
