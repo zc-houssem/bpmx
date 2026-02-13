@@ -66,6 +66,9 @@
       ],
       "@spartan-ng/helm/avatar": [
         "./libs/ui/avatar/src/index.ts"
+      ],
+      "@spartan-ng/helm/accordion": [
+        "./libs/ui/accordion/src/index.ts"
       ]
     }
   },
