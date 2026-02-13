@@ -1,32 +1,28 @@
-import { Component, inject, Input } from "@angular/core";
-import { LayoutService } from "../layout.service";
-import { CommonModule } from "@angular/common";
-import { LucideAngularModule, Save, Workflow } from "lucide-angular";
-import { RouterModule } from "@angular/router";
-import { HlmSeparatorImports } from "@spartan-ng/helm/separator";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { NgIcon, provideIcons } from "@ng-icons/core";
+import { lucideCommand } from "@ng-icons/lucide";
+import { HlmSidebarImports } from "@spartan-ng/helm/sidebar";
+import { data } from "../data";
+import { NavProjectsComponent } from "../nav-projects/nav-projects.component";
+import { NavSecondaryComponent } from "../nav-secondary/nav-secondary.component";
+import { NavUserComponent } from "../nav-user/nav-user.component";
+import { NavComponent } from "../nav/nav.component";
 
 @Component({
   selector: "app-sidebar",
   imports: [
-    CommonModule,
-    LucideAngularModule,
-    HlmSeparatorImports,
-    RouterModule,
+    HlmSidebarImports,
+    NgIcon,
+    NavComponent,
+    NavProjectsComponent,
+    NavUserComponent,
+    NavSecondaryComponent,
   ],
+  providers: [provideIcons({ lucideCommand })],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./sidebar.component.html",
-  styleUrl: "./sidebar.component.css",
+  styleUrls: ["./sidebar.component.css"],
 })
 export class SidebarComponent {
-  readonly layoutService = inject(LayoutService);
-
-  sidebarObj = {
-    header: {
-      name: "BPMX",
-      icon: Workflow,
-    },
-    items: [
-      { name: "New Flow", icon: Workflow, route: ["/new-flow"] },
-      { name: "Saved Flows", icon: Save, route: ["/saved-flows"] },
-    ],
-  };
+  public readonly data = data;
 }

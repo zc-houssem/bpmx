@@ -1,38 +1,33 @@
-<div
-  class="sidebar flex flex-col h-full p-4 bg-background border"
-  [class.open]="layoutService.isSidebarVisible | async"
->
-  <div class="flex flex-col gap-3">
-    <div class="flex justify-center items-center gap-2 px-4">
-      <lucide-icon
-        [img]="sidebarObj.header.icon"
-        class="my-icon size-8"
-      ></lucide-icon>
-      <h1
-        class="font-bold text-md"
-        *ngIf="layoutService.isSidebarVisible | async"
-      >
-        {{ sidebarObj.header.name }}
-      </h1>
-    </div>
-    <hlm-separator />
-    <div class="flex flex-col gap-2">
-      <div
-        *ngFor="let item of sidebarObj.items"
-        class="flex gap-2 items-center justify-center py-2 px-3 rounded-md cursor-pointer"
-        routerLinkActive="bg-muted text-muted-foreground"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <lucide-icon [img]="item.icon" class="my-icon size-5"></lucide-icon>
+<div hlmSidebarWrapper class="flex-col min-h-screen">
+    <ng-content select="[header]" />
+    <div class="flex flex-1">
+        <hlm-sidebar sidebarContainerClass="top-(--header-height) h-[calc(100dvh-var(--header-height))]">
+            <hlm-sidebar-header>
+                <ul hlmSidebarMenu>
+                    <li hlmSidebarMenuItem>
+                        <a hlmSidebarMenuButton size="lg" href="#">
+                            <div
+                                class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                                <ng-icon name="lucideCommand" class="text-base" />
+                            </div>
+                            <div class="grid flex-1 text-left text-sm leading-tight">
+                                <span class="truncate font-medium">Acme Inc</span>
+                                <span class="truncate text-xs">Enterprise</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </hlm-sidebar-header>
 
-        <a
-          [routerLink]="item.route"
-          *ngIf="layoutService.isSidebarVisible | async"
-          class="flex-1"
-        >
-          {{ item.name }}
-        </a>
-      </div>
+            <hlm-sidebar-content>
+                <app-nav [items]="data.navMain" />
+                <app-nav-projects [projects]="data.projects" />
+                <app-nav-secondary class="mt-auto" [items]="data.navSecondary" />
+            </hlm-sidebar-content>
+            <hlm-sidebar-footer>
+                <app-nav-user [user]="data.user" />
+            </hlm-sidebar-footer>
+        </hlm-sidebar>
+        <ng-content />
     </div>
-  </div>
 </div>
