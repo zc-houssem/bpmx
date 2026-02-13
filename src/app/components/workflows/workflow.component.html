@@ -5,7 +5,7 @@
         (selectionChanged)="onSelectionChanged($event)" (edgeDrawn)="onEdgeDrawn($event)" />
     </hlm-resizable-panel>
     <hlm-resizable-handle />
-    <hlm-resizable-panel [minSize]="20" class="overflow-hidden!">
+    <hlm-resizable-panel [minSize]="30" class="overflow-hidden!">
       <div class="relative h-full w-full">
         <div class="absolute inset-0 overflow-y-auto pb-4 pr-1">
           <div hlmAccordion type="multiple" class="w-full">
@@ -24,26 +24,6 @@
                 <app-form-builder [formObject]="globalActionsFormObject"></app-form-builder>
               </hlm-accordion-content>
             </div>
-
-            <!-- Diagram Controls Section -->
-            <div hlmAccordionItem class="px-4">
-              <h3>
-                <button hlmAccordionTrigger>
-                  <div class="flex items-center justify-center gap-2">
-                    <ng-icon hlmAccordionIcon name="lucideLayoutGrid" />
-                    <span>Diagram Controls</span>
-                  </div>
-                  <ng-icon hlmAccordionIcon name="lucideChevronDown" />
-                </button>
-              </h3>
-              <hlm-accordion-content>
-                <div class="flex flex-row gap-2">
-                  <button hlmBtn class="flex-1" (click)="addNode()">New Node</button>
-                  <button hlmBtn class="flex-1" variant="secondary" (click)="centerView()">Center View</button>
-                </div>
-              </hlm-accordion-content>
-            </div>
-
 
             <!-- Properties Section -->
             <div hlmAccordionItem class="px-4" [isOpened]="true">
@@ -85,18 +65,36 @@
                 </button>
               </h3>
               <hlm-accordion-content>
-                <div class="flex flex-col gap-2">
-                  <div class="flex flex-row gap-2">
-                    <button hlmBtn class="flex-1" variant="outline" (click)="onExportWorkflow()">
-                      Export JSON
-                    </button>
-                    <button hlmBtn class="flex-1" variant="outline" (click)="onImport()">
-                      Import JSON
-                    </button>
+                <div class="flex flex-col gap-4">
+                  <!-- Diagram Controls Section -->
+                  <div>
+                    <p class="text-sm font-semibold text-foreground mb-2">Diagram Controls</p>
+                    <div class="flex flex-row gap-2">
+                      <button hlmBtn class="flex-1" (click)="addNode()">New Node</button>
+                      <button hlmBtn class="flex-1" variant="secondary" (click)="centerView()">Center View</button>
+                    </div>
                   </div>
-                  <button hlmBtn variant="destructive" (click)="onClearWorkflow()">
-                    Clear Workflow
-                  </button>
+
+                  <!-- Divider -->
+                  <div class="border-t"></div>
+
+                  <!-- Actions Section -->
+                  <div>
+                    <p class="text-sm font-semibold text-foreground mb-2">Workflow Actions</p>
+                    <div class="flex flex-col gap-2">
+                      <div class="flex flex-row gap-2">
+                        <button hlmBtn class="flex-1" variant="outline" (click)="onExportWorkflow()">
+                          Export JSON
+                        </button>
+                        <button hlmBtn class="flex-1" variant="outline" (click)="onImport()">
+                          Import JSON
+                        </button>
+                      </div>
+                      <button hlmBtn variant="destructive" (click)="onClearWorkflow()">
+                        Clear Workflow
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </hlm-accordion-content>
             </div>
