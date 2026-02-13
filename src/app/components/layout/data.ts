@@ -1,7 +1,7 @@
 export const data = {
   user: {
-    name: "spartan",
-    email: "hello@spartan.com",
+    name: "superadmin",
+    email: "superadmin@example.com",
     avatar: "/assets/avatar.png",
   },
   navMain: [
@@ -12,35 +12,12 @@ export const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: ".",
+          title: "New Workflow",
+          url: "new-workflow",
         },
         {
-          title: "Starred",
-          url: ".",
-        },
-        {
-          title: "Settings",
-          url: ".",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: ".",
-      icon: "lucideBot",
-      items: [
-        {
-          title: "Genesis",
-          url: ".",
-        },
-        {
-          title: "Explorer",
-          url: ".",
-        },
-        {
-          title: "Quantum",
-          url: ".",
+          title: "Saved Workflows",
+          url: "saved-workflows",
         },
       ],
     },
@@ -104,20 +81,20 @@ export const data = {
     },
   ],
   projects: [
-    {
-      name: "Design Engineering",
-      url: ".",
-      icon: "lucideFrame",
-    },
-    {
-      name: "Sales & Marketing",
-      url: ".",
-      icon: "lucideChartPie",
-    },
-    {
-      name: "Travel",
-      url: ".",
-      icon: "lucideMap",
-    },
+    // {
+    //   name: "Design Engineering",
+    //   url: ".",
+    //   icon: "lucideFrame",
+    // },
+    // {
+    //   name: "Sales & Marketing",
+    //   url: ".",
+    //   icon: "lucideChartPie",
+    // },
+    // {
+    //   name: "Travel",
+    //   url: ".",
+    //   icon: "lucideMap",
+    // },
   ],
 };
