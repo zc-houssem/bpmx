@@ -1,0 +1,16 @@
+<div class="flex flex-col h-full">
+    @if (edgeId) {
+    <div class="flex flex-col flex-1">
+        <h2 class="text-md font-semibold mb-3">Edge Properties</h2>
+        <app-form-builder class="flex flex-col flex-1" [formObject]="formObject"></app-form-builder>
+        <div class="flex flex-row gap-2 mt-3">
+            <button hlmBtn class="flex-1" variant="outline" (click)="onSave()">Save</button>
+            <button hlmBtn class="flex-1" variant="destructive" (click)="onDelete()">Delete</button>
+        </div>
+    </div>
+    } @else {
+    <div class="flex items-center justify-center h-full text-muted-foreground">
+        <span>Select an edge to edit</span>
+    </div>
+    }
+</div>

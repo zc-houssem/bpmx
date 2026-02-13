@@ -1,18 +1,19 @@
 <div class="flex flex-col flex-1 w-full h-full">
-  <div class="space-y-3">
-    <h1 class="text-lg font-semibold">Control Panal</h1>
+  <h1 class="text-lg font-semibold mb-3">Properties</h1>
 
-    <button hlmBtn (click)="addNode()">New Node</button>
-
-    <button hlmBtn variant="secondary" (click)="centerView()">
-      Center View
-    </button>
-  </div>
   <div class="flex flex-col flex-1 h-full">
-    <app-form-builder class="flex flex-col flex-1 h-full" [formObject]="formObject"></app-form-builder>
-    <div class="flex flex-row gap-2">
-      <button hlmBtn class="flex-1" variant="outline">Save</button>
-      <button hlmBtn class="flex-1" variant="destructive">Delete</button>
+    @if (selectedNodeId) {
+    <app-node-form [nodeId]="selectedNodeId" [nodeData]="selectedNodeData" (save)="onNodeSave($event)"
+      (delete)="onNodeDelete($event)">
+    </app-node-form>
+    } @else if (selectedEdgeId) {
+    <app-edge-form [edgeId]="selectedEdgeId" [edgeData]="selectedEdgeData" [availableNodes]="availableNodes"
+      (save)="onEdgeSave($event)" (delete)="onEdgeDelete($event)">
+    </app-edge-form>
+    } @else {
+    <div class="flex items-center justify-center flex-1 text-muted-foreground">
+      <span>Select a node or edge to edit</span>
     </div>
+    }
   </div>
 </div>
