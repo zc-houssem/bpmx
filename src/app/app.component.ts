@@ -1,10 +1,12 @@
 import { Component } from "@angular/core";
-import { RouterOutlet, RouterLinkWithHref } from "@angular/router";
+import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
+import Layout from "./components/layout/layout.component";
+import LayoutComponent from "./components/layout/layout.component";
 
 @Component({
   selector: "app-root",
-  imports: [RouterOutlet, RouterLinkWithHref],
+  imports: [RouterOutlet, LayoutComponent],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })

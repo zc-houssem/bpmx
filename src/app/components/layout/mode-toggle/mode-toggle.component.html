@@ -1,0 +1,11 @@
+<button
+  hlmBtn
+  (click)="layoutService.toggleDarkMode()"
+  size="icon"
+  variant="secondary"
+>
+  <lucide-icon
+    [img]="(layoutService.darkMode | async) ? Moon : Sun"
+    class="my-icon size-6"
+  ></lucide-icon>
+</button>
