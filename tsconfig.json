@@ -33,6 +33,12 @@
       ],
       "@spartan-ng/helm/textarea": [
         "./libs/ui/textarea/src/index.ts"
+      ],
+      "@spartan-ng/helm/switch": [
+        "./libs/ui/switch/src/index.ts"
+      ],
+      "@spartan-ng/helm/resizable": [
+        "./libs/ui/resizable/src/index.ts"
       ]
     }
   },

@@ -1,19 +1,35 @@
-<div class="flex flex-row flex-1 w-full">
+<div class="flex flex-col lg:flex-row flex-1 w-full overflow-auto">
   <!-- Diagram -->
-  <div class="flex flex-col w-3/4">
-    <ng-diagram [model]="model" [config]="config" />
-  </div>
+  <!-- <div class="flex flex-col w-full min-h-75">
+    <ng-diagram class="flex-1" [model]="model" [config]="config" />
+  </div> -->
 
   <!-- Sidebar -->
-  <div class="flex flex-col w-1/4 border-l">
-    <div class="p-4 space-y-3">
-      <h1 class="text-lg font-semibold">Workflow</h1>
-
-      <button hlmBtn (click)="addNode()">New Node</button>
-
-      <button hlmBtn variant="secondary" (click)="centerView()">
-        Center View
-      </button>
-    </div>
-  </div>
+  <!-- <div class="flex flex-col w-full border-t lg:border-t-0 lg:border-l">
+    
+  </div> -->
+  <hlm-resizable-group class="h-full w-full rounded-lg border">
+    <hlm-resizable-panel>
+      <ng-diagram class="flex-1" [model]="model" [config]="config" />
+    </hlm-resizable-panel>
+    <hlm-resizable-handle />
+    <hlm-resizable-panel>
+      <hlm-resizable-group direction="vertical">
+        <hlm-resizable-panel>
+          <div class="flex h-full items-center justify-center p-6">
+            <app-workflow-controls
+              [addNode]="addNode.bind(this)"
+              [centerView]="centerView.bind(this)"
+            ></app-workflow-controls>
+          </div>
+        </hlm-resizable-panel>
+        <hlm-resizable-handle />
+        <!-- <hlm-resizable-panel>
+          <div class="flex h-full items-center justify-center p-6">
+            <span class="font-semibold">Three</span>
+          </div>
+        </hlm-resizable-panel> -->
+      </hlm-resizable-group>
+    </hlm-resizable-panel>
+  </hlm-resizable-group>
 </div>

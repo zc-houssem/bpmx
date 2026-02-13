@@ -8,10 +8,13 @@ import {
   NgDiagramViewportService,
   provideNgDiagram,
 } from "ng-diagram";
+import { WorkflowControlsComponent } from "./workflow-controls/workflow-controls.component";
+import { WorkflowNode } from "./workflow.types";
+import { HlmResizableImports } from "@spartan-ng/helm/resizable";
 
 @Component({
   selector: "app-workflow",
-  imports: [NgDiagramComponent, HlmButtonImports],
+  imports: [NgDiagramComponent, WorkflowControlsComponent, HlmResizableImports],
   providers: [provideNgDiagram()],
   templateUrl: "./workflow.component.html",
   styleUrl: "./workflow.component.css",
@@ -49,9 +52,27 @@ export class WorkflowComponent {
           x: 200 + Math.random() * 200,
           y: 200 + Math.random() * 200,
         },
-        data: { label: `Node ${this.counter}` },
+        data: {
+          label: `Node ${this.counter}`,
+          description: `This is a default description for the node ${this.counter}`,
+          isUpdatable: true,
+        },
       },
     ]);
     this.counter++;
+  }
+
+  onNodeClick(node: string) {
+    this.selectedNode = node;
+  }
+
+  updateNodeField(nodeId: string, field: keyof WorkflowNode, value: any) {
+    const data = this.diagramModelService.getNodeById(nodeId);
+    this.diagramModelService.updateNode(nodeId, {
+      data: {
+        ...data,
+        [field]: value,
+      },
+    });
   }
 }
