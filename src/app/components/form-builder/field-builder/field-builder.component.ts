@@ -63,8 +63,8 @@ export class FieldBuilderComponent implements OnInit, AfterViewInit {
           .map((opt: SelectOption) => ({
             ...opt,
             name: opt.name,
-          }))
-      )
+          })),
+      ),
     );
 
     this.initSearchableDetection();
@@ -80,7 +80,7 @@ export class FieldBuilderComponent implements OnInit, AfterViewInit {
         componentType,
         {
           injector: this.injector,
-        }
+        },
       );
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -132,6 +132,33 @@ export class FieldBuilderComponent implements OnInit, AfterViewInit {
   onChangeHandler(field: any, event: any) {
     if (field.props && typeof field.props["onChange"] === "function") {
       field.props["onChange"](event);
+    }
+  }
+
+  onInputChange(event: Event) {
+    const value = (event.target as HTMLInputElement | HTMLTextAreaElement)
+      .value;
+    if (
+      this.field.props &&
+      typeof this.field.props["onChange"] === "function"
+    ) {
+      this.field.props["onChange"](value);
+    }
+  }
+
+  onBlur() {
+    if (this.field.props && typeof this.field.props["onBlur"] === "function") {
+      this.field.props["onBlur"]();
+    }
+    this.fieldBlur.emit();
+  }
+
+  onSwitchChange(checked: boolean) {
+    if (
+      this.field.props &&
+      typeof this.field.props["onCheckedChange"] === "function"
+    ) {
+      this.field.props["onCheckedChange"](checked);
     }
   }
 }
