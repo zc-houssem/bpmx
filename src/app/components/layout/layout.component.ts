@@ -16,15 +16,6 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
     class: "block [--header-height:--spacing(14)]",
   },
   styleUrl: "./layout.component.css",
-  template: `
-    <app-sidebar>
-      <app-site-header header />
-      <main hlmSidebarInset>
-        <div class="flex flex-1 flex-col gap-4 p-4">
-          <ng-content />
-        </div>
-      </main>
-    </app-sidebar>
-  `,
+  templateUrl: "./layout.component.html",
 })
 export default class LayoutComponent {}
