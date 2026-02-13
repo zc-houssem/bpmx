@@ -8,8 +8,15 @@ import {
   NgDiagramViewportService,
   provideNgDiagram,
 } from "ng-diagram";
-import { WorkflowControlsComponent } from "./workflow-controls/workflow-controls.component";
-import { GlobalActionsComponent } from "./global-actions/global-actions.component";
+import {
+  NodeFormComponent,
+  NodeFormData,
+} from "./node-form/node-form.component";
+import {
+  EdgeFormComponent,
+  EdgeFormData,
+  EdgeNode,
+} from "./edge-form/edge-form.component";
 import {
   WorkflowConfig,
   WorkflowDefinition,
@@ -17,19 +24,43 @@ import {
   WorkflowStep,
 } from "./workflow.types";
 import { HlmResizableImports } from "@spartan-ng/helm/resizable";
-import { NodeFormData } from "./node-form/node-form.component";
-import { EdgeFormData, EdgeNode } from "./edge-form/edge-form.component";
+import { HlmAccordionImports } from "@spartan-ng/helm/accordion";
+import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { LabeledEdgeComponent } from "./labeled-edge/labeled-edge.component";
+import { FormBuilderComponent } from "../form-builder/form-builder.component";
+import { getGlobalActionsFormObject } from "./global-actions/utils/global-actions.form-object";
+import { BehaviorSubject } from "rxjs";
+import { NgIcon, provideIcons } from "@ng-icons/core";
+import {
+  lucideChevronDown,
+  lucideSettings,
+  lucideLayoutGrid,
+  lucideZap,
+  lucideFileText,
+} from "@ng-icons/lucide";
 
 @Component({
   selector: "app-workflow",
   imports: [
     NgDiagramComponent,
-    WorkflowControlsComponent,
-    GlobalActionsComponent,
+    NodeFormComponent,
+    EdgeFormComponent,
+    FormBuilderComponent,
     HlmResizableImports,
+    HlmAccordionImports,
+    HlmButtonImports,
+    NgIcon,
   ],
-  providers: [provideNgDiagram()],
+  providers: [
+    provideNgDiagram(),
+    provideIcons({
+      lucideChevronDown,
+      lucideSettings,
+      lucideLayoutGrid,
+      lucideFileText,
+      lucideZap,
+    }),
+  ],
   templateUrl: "./workflow.component.html",
   styleUrl: "./workflow.component.css",
 })
@@ -62,6 +93,29 @@ export class WorkflowComponent {
     flowTitle: "",
     schemaName: "",
   };
+
+  // BehaviorSubjects for form values
+  flowTitle$ = new BehaviorSubject<string>("");
+  schemaName$ = new BehaviorSubject<string>("");
+
+  globalActionsFormObject = getGlobalActionsFormObject({
+    flowTitle$: this.flowTitle$,
+    schemaName$: this.schemaName$,
+    onFlowTitleChange: (value: string) => {
+      this.flowTitle$.next(value);
+      this.onConfigChange({
+        flowTitle: value,
+        schemaName: this.schemaName$.getValue(),
+      });
+    },
+    onSchemaNameChange: (value: string) => {
+      this.schemaName$.next(value);
+      this.onConfigChange({
+        flowTitle: this.flowTitle$.getValue(),
+        schemaName: value,
+      });
+    },
+  });
 
   model = initializeModel({
     nodes: [],
@@ -195,6 +249,33 @@ export class WorkflowComponent {
   // Global actions
   onConfigChange(config: WorkflowConfig) {
     this.workflowConfig = config;
+    this.flowTitle$.next(config.flowTitle);
+    this.schemaName$.next(config.schemaName);
+  }
+
+  onImport(): void {
+    // Trigger file input for import
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (event: Event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const workflow = JSON.parse(
+              reader.result as string,
+            ) as WorkflowDefinition;
+            this.onImportWorkflow(workflow);
+          } catch (e) {
+            console.error("Failed to parse workflow JSON:", e);
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+    input.click();
   }
 
   onExportWorkflow() {
