@@ -2,20 +2,31 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 const SIDEBAR_KEY = "layout.sidebar.visible";
-const DARKMODE_KEY = "layout.darkmode";
+const THEME_KEY = "layout.theme";
+
+export type AppTheme = "light" | "dark" | "system";
 
 @Injectable({
   providedIn: "root",
 })
 export class LayoutService {
   isSidebarVisible = new BehaviorSubject<boolean>(
-    this.getBoolean(SIDEBAR_KEY, true)
+    this.getBoolean(SIDEBAR_KEY, true),
   );
 
-  darkMode = new BehaviorSubject<boolean>(this.getBoolean(DARKMODE_KEY, false));
+  theme = new BehaviorSubject<AppTheme>(this.getTheme());
 
   constructor() {
-    this.applyDarkMode(this.darkMode.value);
+    this.applyTheme(this.theme.value);
+
+    // Listen for system theme changes
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", () => {
+        if (this.theme.value === "system") {
+          this.applyTheme("system");
+        }
+      });
   }
 
   toggleSidebar(): void {
@@ -24,21 +35,33 @@ export class LayoutService {
     localStorage.setItem(SIDEBAR_KEY, String(value));
   }
 
-  toggleDarkMode(): void {
-    const value = !this.darkMode.value;
-    this.darkMode.next(value);
-    localStorage.setItem(DARKMODE_KEY, String(value));
-    this.applyDarkMode(value);
+  setTheme(theme: AppTheme): void {
+    this.theme.next(theme);
+    localStorage.setItem(THEME_KEY, theme);
+    this.applyTheme(theme);
   }
 
-  private applyDarkMode(enabled: boolean): void {
+  private applyTheme(theme: AppTheme): void {
     const html = document.documentElement;
+    let effectiveTheme = theme;
+    if (theme === "system") {
+      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    const enabled = effectiveTheme === "dark";
     html.classList.toggle("dark", enabled);
-    html.setAttribute("data-theme", enabled ? "dark" : "light");
+    html.setAttribute("data-theme", effectiveTheme);
   }
 
   private getBoolean(key: string, fallback: boolean): boolean {
     const value = localStorage.getItem(key);
     return value === null ? fallback : value === "true";
+  }
+
+  private getTheme(): AppTheme {
+    const value = localStorage.getItem(THEME_KEY) as AppTheme;
+    return value || "system";
   }
 }
