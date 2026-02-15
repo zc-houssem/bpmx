@@ -1,10 +1,22 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import {
+  Router,
+  NavigationEnd,
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+} from "@angular/router";
+import { filter } from "rxjs/operators";
 
 const SIDEBAR_KEY = "layout.sidebar.visible";
 const THEME_KEY = "layout.theme";
 
 export type AppTheme = "light" | "dark" | "system";
+
+export interface Breadcrumb {
+  label: string;
+  url: string;
+}
 
 @Injectable({
   providedIn: "root",
@@ -15,6 +27,11 @@ export class LayoutService {
   );
 
   theme = new BehaviorSubject<AppTheme>(this.getTheme());
+
+  breadcrumbs = new BehaviorSubject<Breadcrumb[]>([]);
+
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   constructor() {
     this.applyTheme(this.theme.value);
@@ -27,6 +44,48 @@ export class LayoutService {
           this.applyTheme("system");
         }
       });
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateBreadcrumbs();
+      });
+
+    // Initial check
+    setTimeout(() => this.updateBreadcrumbs(), 0);
+  }
+
+  private updateBreadcrumbs(): void {
+    const breadcrumbs: Breadcrumb[] = [];
+    this.addBreadcrumbs(this.router.routerState.snapshot.root, "", breadcrumbs);
+    this.breadcrumbs.next(breadcrumbs);
+  }
+
+  private addBreadcrumbs(
+    route: ActivatedRouteSnapshot,
+    url: string,
+    breadcrumbs: Breadcrumb[],
+  ): void {
+    for (const child of route.children) {
+      // Get URL segments from url array or from routeConfig.path for component-less routes
+      let segments = child.url.map((s) => s.path).join("/");
+      if (!segments && child.routeConfig?.path) {
+        segments = child.routeConfig.path;
+      }
+      const currentUrl = segments ? `${url}/${segments}` : url;
+
+      const breadcrumb =
+        child.data["breadcrumb"] || child.routeConfig?.data?.["breadcrumb"];
+
+      if (breadcrumb && !breadcrumbs.find((b) => b.label === breadcrumb)) {
+        breadcrumbs.push({
+          label: breadcrumb,
+          url: currentUrl || "/",
+        });
+      }
+
+      this.addBreadcrumbs(child, currentUrl, breadcrumbs);
+    }
   }
 
   toggleSidebar(): void {

@@ -13,11 +13,11 @@ export const data = {
       items: [
         {
           title: "New Workflow",
-          url: "new-workflow",
+          url: "playground/new-workflow",
         },
         {
           title: "Saved Workflows",
-          url: "saved-workflows",
+          url: "playground/saved-workflows",
         },
       ],
     },
