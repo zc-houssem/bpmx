@@ -41,7 +41,7 @@ import {
 import { WorkflowDbService } from "./workflow-db.service";
 
 @Component({
-  selector: "app-workflow",
+  selector: "app-workflow-editor",
   imports: [
     NgDiagramComponent,
     NodeFormComponent,
@@ -62,10 +62,10 @@ import { WorkflowDbService } from "./workflow-db.service";
       lucideZap,
     }),
   ],
-  templateUrl: "./workflow.component.html",
-  styleUrl: "./workflow.component.css",
+  templateUrl: "./workflow-editor.component.html",
+  styleUrls: ["./workflow-editor.component.css"],
 })
-export class WorkflowComponent {
+export class WorkflowEditorComponent {
   readonly diagramModelService = inject(NgDiagramModelService);
   readonly viewPortService = inject(NgDiagramViewportService);
   private readonly workflowDbService = inject(WorkflowDbService);
@@ -373,7 +373,7 @@ export class WorkflowComponent {
         alert("No workflows found in database.");
         return;
       }
-      
+
       // Simple pick - for now just use the first one or ask
       const workflow = workflows[0];
       const definition = JSON.parse(workflow.data) as WorkflowDefinition;

@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
-import { WorkflowComponent } from "./components/workflows/workflow.component";
 import { SavedWorkflowsComponent } from "./components/workflows/saved-workflows/saved-workflows.component";
+import { NewWorkflowComponent } from "./pages/playground/new-workflow/new-workflow.component";
 
 export const routes: Routes = [
   {
@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: "new-workflow",
-        component: WorkflowComponent,
+        component: NewWorkflowComponent,
         data: { breadcrumb: "New Workflow" },
       },
       {
