@@ -20,7 +20,7 @@
                   <ng-icon hlmAccordionIcon name="lucideChevronDown" />
                 </button>
               </h3>
-              <hlm-accordion-content>
+              <hlm-accordion-content class="px-1">
                 <app-form-builder [formObject]="globalActionsFormObject"></app-form-builder>
               </hlm-accordion-content>
             </div>
@@ -36,7 +36,7 @@
                   <ng-icon hlmAccordionIcon name="lucideChevronDown" />
                 </button>
               </h3>
-              <hlm-accordion-content class="data-[state=open]:h-auto!">
+              <hlm-accordion-content class="data-[state=open]:h-auto! px-1">
                 @if (selectedNodeId) {
                 <app-node-form [nodeId]="selectedNodeId" [nodeData]="selectedNodeData" (save)="onNodeUpdate($event)"
                   (delete)="onNodeDelete($event)">
@@ -88,6 +88,14 @@
                         </button>
                         <button hlmBtn class="flex-1" variant="outline" (click)="onImport()">
                           Import JSON
+                        </button>
+                      </div>
+                      <div class="flex flex-row gap-2">
+                        <button hlmBtn class="flex-1" variant="outline" (click)="onSaveToDatabase()">
+                          Save to DB
+                        </button>
+                        <button hlmBtn class="flex-1" variant="outline" (click)="onLoadFromDatabase()">
+                          Load from DB
                         </button>
                       </div>
                       <button hlmBtn variant="destructive" (click)="onClearWorkflow()">

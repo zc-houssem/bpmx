@@ -38,6 +38,7 @@ import {
   lucideZap,
   lucideFileText,
 } from "@ng-icons/lucide";
+import { WorkflowDbService } from "./workflow-db.service";
 
 @Component({
   selector: "app-workflow",
@@ -67,6 +68,7 @@ import {
 export class WorkflowComponent {
   readonly diagramModelService = inject(NgDiagramModelService);
   readonly viewPortService = inject(NgDiagramViewportService);
+  private readonly workflowDbService = inject(WorkflowDbService);
 
   @ViewChild(NgDiagramComponent)
   diagram!: NgDiagramComponent;
@@ -322,7 +324,65 @@ export class WorkflowComponent {
     a.click();
     URL.revokeObjectURL(url);
   }
+  async onSaveToDatabase() {
+    const nodes = this.diagramModelService.nodes();
+    const edges = this.diagramModelService.edges();
 
+    const steps: WorkflowStep[] = nodes.map((node: any) => {
+      const nodeData = node.data as WorkflowNode;
+      const nodeEdges = edges.filter((e: any) => e.source === node.id);
+
+      return {
+        id: node.id,
+        name: nodeData.label,
+        description: nodeData.description,
+        isUpdatable: nodeData.isUpdatable,
+        nextSteps: nodeEdges.map((edge: any) => {
+          const data = edge.data as any;
+          return {
+            label: data?.label || "",
+            validation: data?.validation || null,
+            nextStep: edge.target,
+            hidden: data?.hidden || false,
+          };
+        }),
+      };
+    });
+
+    const workflow: WorkflowDefinition = {
+      "flow-title": this.workflowConfig.flowTitle,
+      "schema-name": this.workflowConfig.schemaName,
+      steps,
+    };
+
+    const id = this.workflowConfig.schemaName || crypto.randomUUID();
+    const name = this.workflowConfig.flowTitle || "Untitled Workflow";
+
+    try {
+      await this.workflowDbService.saveWorkflow(id, name, workflow);
+      alert("Workflow saved to database successfully!");
+    } catch (error) {
+      alert("Failed to save workflow to database.");
+    }
+  }
+
+  async onLoadFromDatabase() {
+    try {
+      const workflows = await this.workflowDbService.getWorkflows();
+      if (workflows.length === 0) {
+        alert("No workflows found in database.");
+        return;
+      }
+      
+      // Simple pick - for now just use the first one or ask
+      const workflow = workflows[0];
+      const definition = JSON.parse(workflow.data) as WorkflowDefinition;
+      this.onImportWorkflow(definition);
+      alert(`Loaded workflow: ${workflow.name}`);
+    } catch (error) {
+      alert("Failed to load workflows from database.");
+    }
+  }
   onImportWorkflow(workflow: WorkflowDefinition) {
     // Clear existing
     this.onClearWorkflow();
